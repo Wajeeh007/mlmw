@@ -1,0 +1,10 @@
+<h1><span class="glyphicon glyphicon-tasks"></span> Pakistan Courts</h1><hr />
+
+<h3>Supreme Hight Court, Islamabad</h3>
+<p>The subordinate judiciary consists of civil and criminal district courts, and numerous specialised courts covering banking, insurance, customs and excise, smuggling, drugs, terrorism, taxation, the environment, consumer protection, and corruption. The criminal courts were created under the Criminal Procedure Code 1898 and the civil courts were established by the West Pakistan Civil Court Ordinance 1964. There are also revenue courts that operate under the West Pakistan Land Revenue Act 1967. The government may also set up administrative courts and tribunals for exercising exclusive jurisdiction in specific matters</p><hr />
+<h3>Hight Court, Multan</h3>
+<p>The subordinate judiciary consists of civil and criminal district courts, and numerous specialised courts covering banking, insurance, customs and excise, smuggling, drugs, terrorism, taxation, the environment, consumer protection, and corruption. The criminal courts were created under the Criminal Procedure Code 1898 and the civil courts were established by the West Pakistan Civil Court Ordinance 1964. There are also revenue courts that operate under the West Pakistan Land Revenue Act 1967. The government may also set up administrative courts and tribunals for exercising exclusive jurisdiction in specific matters</p><hr />
+<h3>Hight Court, Karachi</h3>
+<p>The subordinate judiciary consists of civil and criminal district courts, and numerous specialised courts covering banking, insurance, customs and excise, smuggling, drugs, terrorism, taxation, the environment, consumer protection, and corruption. The criminal courts were created under the Criminal Procedure Code 1898 and the civil courts were established by the West Pakistan Civil Court Ordinance 1964. There are also revenue courts that operate under the West Pakistan Land Revenue Act 1967. The government may also set up administrative courts and tribunals for exercising exclusive jurisdiction in specific matters</p><hr />
+
+</div><hr/>
