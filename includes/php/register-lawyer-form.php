@@ -123,7 +123,7 @@ if (isset($_POST['submit']) && ($_POST['name']!=''))
 		$query = "INSERT lawyers SET name='$name', email='$email', password='$password', gender='$gender', experience='$experience', law_school='$law_school', practise_areas='$practise_areas', phone='$phone',
 fax='$fax', facebook='$facebook',
 		twitter='$twitter',
-		google_plus='$google_plus', languages='$languages', address='$address', country='$country',image='$image_name'";
+		google_plus='$google_plus', languages='$languages', address='$address', country='$country',image='$image_name', status='1'";
 		
 		$result = mysqli_query($connection, $query);
 	     confirm_query($result);

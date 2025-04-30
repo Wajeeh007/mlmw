@@ -1,4 +1,9 @@
-<?php include("manage_courts.php"); ?>
+<?php
+// Start output buffering
+ob_start();
+
+include("manage_courts.php");
+?>
 
 <?php if(isset($_POST['submit'])){
 $id=$_SESSION['court_id'];
@@ -37,7 +42,7 @@ redirect_to("manage_courts.php?court=court");
  // query db
  $id = $_GET['id'];
  $result=find_court_by_id($id);
- $row = mysql_fetch_assoc($result);
+ $row = mysqli_fetch_assoc($result);
  $name=$row['name'];
 
  ?>
@@ -48,5 +53,9 @@ redirect_to("manage_courts.php?court=court");
  </form>
  <?php
  }
+
+require('includes/php/footer.php');
+
+// Flush the output buffer
+ob_end_flush();
 ?>
-<?php require('includes/php/footer.php'); ?>

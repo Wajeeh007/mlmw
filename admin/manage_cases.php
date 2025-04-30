@@ -70,13 +70,13 @@
 
 	// loop through results of database query, displaying them in the table
 	$result=find_case_by_id($case_id);
-	while($row = mysql_fetch_array( $result )) {
+	while($row = mysqli_fetch_array($result)) {
 	$client_id=$row['client_id'];
 	
 
     // getting client name to show in table using client id
 	$client=find_client_name_by_id($client_id);
-	     while($data=mysql_fetch_array($client)){
+	     while($data=mysqli_fetch_array($client)){
 		 $client_name=$data['name'];
 		 
 		 }
@@ -90,7 +90,7 @@
 		echo '<td>' . $client_name.'</td>';
 		echo '<td>';
 	$lawyer=find_lawyer_name_by_case_id($row['case_id']);	
-		while($lawer=mysql_fetch_array($lawyer)){
+		while($lawer=mysqli_fetch_array($lawyer)){
 		 echo $lawer['name'];
 		 echo '<br/>';
 		 }
@@ -104,7 +104,7 @@
 		<?php
   $lawyer=find_lawyer_name_by_case_id($case_id);
   		$lawyer_id='';	
-		while($lawer=mysql_fetch_array($lawyer)){ 
+		while($lawer=mysqli_fetch_array($lawyer)){ 
 		$lawyer_id=$lawer['lawyer_id']; 
 		$name=$lawer['name']; ?>
 		 <option value="<?php echo $lawyer_id ?>"><?php echo $name; ?></option>
@@ -147,7 +147,7 @@
 
 		<select name="lawyer_id">
   <?php $lawyer_set=all_lawyers();?>
-  <?php while($row=mysql_fetch_array($lawyer_set)){
+  <?php while($row=mysqli_fetch_array($lawyer_set)){
   $lawyer_id=$row['lawyer_id'];
   $name=$row['name'];
   ?>
@@ -198,7 +198,7 @@
 	// loop through results of database query, displaying them in the table
 	$result=find_all_cases();
 	
-	while($row = mysql_fetch_array( $result )) {
+	while($row = mysqli_fetch_array($result)) {
 	$client_id=$row['client_id'];
 	
 	
@@ -207,7 +207,7 @@
 	
     // getting client name to show in table using client id
 	$client=find_client_name_by_id($client_id);
-	     while($data=mysql_fetch_array($client)){
+	     while($data=mysqli_fetch_array($client)){
 		 $client_name=$data['name'];
 		 
 		 }
@@ -222,7 +222,7 @@
 		echo '<td>';
 		
 	$lawyer=find_lawyer_name_by_case_id($row['case_id']);	
-		while($lawer=mysql_fetch_array($lawyer)){
+		while($lawer=mysqli_fetch_array($lawyer)){
 		 echo $lawer['name'];
 		 
 		 echo '<br/>';

@@ -1,4 +1,9 @@
-<?php include("view-admins.php") ?>
+<?php
+// Start output buffering
+ob_start();
+
+include("view-admins.php");
+?>
 <div>
         <ul class="breadcrumb">
             <li>
@@ -71,6 +76,7 @@
  // once saved, redirect back to the view page
 
  header("Location: view-admins.php?vie=vie"); 
+ exit(); // Make sure to exit after redirect
  }
  }
  else
@@ -78,4 +84,7 @@
  {
  renderForm('','','');
  }
+
+// Flush the output buffer
+ob_end_flush();
 ?>

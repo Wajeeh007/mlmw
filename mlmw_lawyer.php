@@ -20,7 +20,7 @@
 	<div class="container">
 	<!--row1 menubar-->
 		<div class="row">
-		<?php include("/includes/php/menu-bar.php"); ?>
+		<?php include("includes/php/menu-bar.php"); ?>
 		
 			</div>
 			<!--menubar row end -->
@@ -99,7 +99,7 @@
 		<div id="row">
 		<div class="col-lg-12">
 			<!--footer area start-->
-			<?php include("/includes/php/footer.php"); ?>
+			<?php include("includes/php/footer.php"); ?>
 			<!-- footer area end -->
 		</div>
 		</div>

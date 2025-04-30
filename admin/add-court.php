@@ -1,4 +1,9 @@
-<?php include("manage_courts.php"); ?>
+<?php
+// Start output buffering
+ob_start();
+
+include("manage_courts.php");
+?>
 
 <?php if(isset($_POST['submit'])){
 
@@ -35,4 +40,9 @@ redirect_to("manage_courts.php?court=court");
  <input type="submit" name="submit" value="Add Court" class="btn btn-success"/>
  </form>
  
-<?php require('includes/php/footer.php'); ?>
+<?php 
+require('includes/php/footer.php');
+
+// Flush the output buffer
+ob_end_flush();
+?>

@@ -1,4 +1,9 @@
-<?php include("view-admins.php") ?>
+<?php
+// Start output buffering
+ob_start();
+
+include("view-admins.php");
+?>
 <?php
 /* 
  delete-admin.PHP
@@ -20,11 +25,15 @@
  
  // redirect back to the view page
  header("Location: view-admins.php?vie=vie");
+ exit(); // Make sure to exit after redirect
  }
  else
  // if id isn't set, or isn't valid, redirect back to view page
  {
  header("Location: view-admins.php?vie=vie");
+ exit(); // Make sure to exit after redirect
  }
- 
+
+// Flush the output buffer
+ob_end_flush();
 ?>

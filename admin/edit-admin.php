@@ -1,4 +1,10 @@
-<?php include("view-admins.php"); ?>
+<?php
+// Start output buffering
+ob_start();
+
+// Include other files
+include("view-admins.php");
+?>
 <div>
         <ul class="breadcrumb">
             <li>
@@ -77,6 +83,7 @@ echo '<div style="padding:4px; border:1px solid red; color:red;">'.$error.'</div
  
  // once saved, redirect back to the view page
  header("Location: view-admins.php?vie=vie"); 
+ exit(); // Make sure to exit after redirect
  }
  }
  else
@@ -123,5 +130,9 @@ echo '<div style="padding:4px; border:1px solid red; color:red;">'.$error.'</div
  echo 'Error!';
  }
  }
+
+require('includes/php/footer.php');
+
+// Flush the output buffer
+ob_end_flush();
 ?>
-<?php require('includes/php/footer.php'); ?>

@@ -87,7 +87,7 @@ if (isset($_POST['submit']) && ($_POST['name']!=''))
      $image_tmp=$_FILES['image']['tmp_name'];
 			move_uploaded_file($image_tmp, "./img/$image_name");
 		$query = "INSERT clients SET name='$name', email='$email', password='$password', gender='$gender', phone='$phone', facebook='$facebook',
-		city='$city', address='$address', country='$country', image='$image_name'";
+		city='$city', address='$address', country='$country', image='$image_name', status='1'";
 		
 		$result = mysqli_query($connection, $query);
 	     confirm_query($result);

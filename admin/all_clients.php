@@ -16,13 +16,14 @@
 
 	// connect to the database
 	include('connect-db.php');
+	global $connection;
 	
 	// number of results to show per page
 	$per_page = 10;
 	
 	// figure out the total pages in the database
-	$result = mysql_query("SELECT * from clients");
-	$total_results = mysql_num_rows($result);
+	$result = mysqli_query($connection, "SELECT * FROM clients");
+	$total_results = mysqli_num_rows($result);
 	$total_pages = ceil($total_results / $per_page);
 
 	// check if the 'page' variable is set in the URL (ex: view-paginated.php?page=1)
@@ -63,7 +64,13 @@
 	echo "<table border='0' cellpadding='10'>";
 	echo "<tr> <th>client_id</th> <th>Name</th> <th>Email</th> <th></th> <th></th></tr>";
 
-	// loop through results of database query, displaying them in the table	
+	// loop through results of database query, displaying them in the table
+	// Convert result to an array to use indexed access
+	$rows = [];
+	while($row = mysqli_fetch_assoc($result)) {
+		$rows[] = $row;
+	}
+	
 	for ($i = $start; $i < $end; $i++)
 	{
 		// make sure that PHP doesn't try to show results that don't exist
@@ -71,20 +78,20 @@
 	
 		// echo out the contents of each row into a table
 		echo "<tr>";
-		echo '<td>' . mysql_result($result, $i, 'client_id') . '</td>';
-		echo '<td>' . mysql_result($result, $i, 'name') . '</td>';
-		echo '<td>' . mysql_result($result, $i, 'email') . '</td>';
+		echo '<td>' . $rows[$i]['client_id'] . '</td>';
+		echo '<td>' . $rows[$i]['name'] . '</td>';
+		echo '<td>' . $rows[$i]['email'] . '</td>';
 		
-		$status=mysql_result($result,$i,'status');
+		$status = $rows[$i]['status'];
 		if($status==1){
-		echo '<td><a class="btn btn-primary" href="block_client.php?id=' . mysql_result($result, $i, 'client_id') . '">
+		echo '<td><a class="btn btn-primary" href="block_client.php?id=' . $rows[$i]['client_id'] . '">
                 <i class="glyphicon glyphicon-stop icon-white"></i>
                 Block
             </a></td>';
 		} else {
 		echo '<td></td>';
 		}
-		echo '<td><a class="btn btn-danger" href="delete-client.php?id=' . mysql_result($result, $i, 'client_id') . '">
+		echo '<td><a class="btn btn-danger" href="delete-client.php?id=' . $rows[$i]['client_id'] . '">
                 <i class="glyphicon glyphicon-trash icon-white"></i>
                 Delete
             </a></td>';

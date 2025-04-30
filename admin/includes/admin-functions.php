@@ -1,153 +1,172 @@
- <?php
+<?php
  
  
 	function delete_lawyer_having_case($case_id,$lawyer_id){
-	$result_set=mysql_query("delete from cases_has_lawyers WHERE  lawyer_id ='$lawyer_id' and  
-	case_id='$case_id'");
+	global $connection;
+	$result_set=mysqli_query($connection, "DELETE FROM cases_has_lawyers WHERE lawyer_id ='$lawyer_id' AND case_id='$case_id'");
 	confirm_query($result_set);
 	return true;
 	}
 	 function count_all_lawyers(){
-	
-	 $result = mysql_query("select * from lawyers");
+	global $connection;
+	 $result = mysqli_query($connection, "SELECT * FROM lawyers");
 	 $answer=0;
-	 while($row =mysql_fetch_array($result )){
+	 while($row = mysqli_fetch_array($result)){
 	 $answer++;
 	 }
 	 return $answer;
 	 }
 	
  	function find_total_zero_status_lawyers(){
-	$result = mysql_query("SELECT * FROM lawyers where status=0") 
-		or die(mysql_error()); 
+	global $connection;
+	$result = mysqli_query($connection, "SELECT * FROM lawyers WHERE status=0") 
+		or die(mysqli_error($connection)); 
 		$answer=0; 
-	while($row = mysql_fetch_array( $result )) {
+	while($row = mysqli_fetch_array($result)) {
 	$answer++;
 	}
 	return $answer;
 	}
 	function find_all_zero_status_lawyers(){
-
-	$result_set = mysql_query("SELECT * FROM lawyers where status=0");
+	global $connection;
+	$result_set = mysqli_query($connection, "SELECT * FROM lawyers WHERE status=0");
 	confirm_query($result_set);
 		return $result_set;
 
 	}
 	function allow_lawyer($id){
-	$result_set=mysql_query("UPDATE  lawyers SET  status =  '1' WHERE  lawyer_id ='$id'");
+	global $connection;
+	$result_set=mysqli_query($connection, "UPDATE lawyers SET status = '1' WHERE lawyer_id ='$id'");
 	confirm_query($result_set);
 	return true;
 	}
 	function block_lawyer($id){
-	$result_set=mysql_query("UPDATE  lawyers SET  status =  '0' WHERE  lawyer_id ='$id'");
+	global $connection;
+	$result_set=mysqli_query($connection, "UPDATE lawyers SET status = '0' WHERE lawyer_id ='$id'");
 	confirm_query($result_set);
 	return true;
 	}
 	function delete_lawyer_by_id($id){
-	$result_set=mysql_query("delete from lawyers WHERE  lawyer_id ='$id'");
+	global $connection;
+	$result_set=mysqli_query($connection, "DELETE FROM lawyers WHERE lawyer_id ='$id'");
 	confirm_query($result_set);
 	return true;
 	}
 	function all_lawyers(){
-	$result_set=mysql_query("select * from lawyers");
+	global $connection;
+	$result_set=mysqli_query($connection, "SELECT * FROM lawyers");
 	confirm_query($result_set);
 	return $result_set;
 	}
 	//using in manage_cases to find lawyer names for specific case
 	function find_lawyer_name_by_case_id($id){
-	$query="select l.name,l.lawyer_id from cases_has_lawyers chs, lawyers l where     chs.lawyer_id=l.lawyer_id
-	and chs.case_id='$id'";
-	$result_set=mysql_query($query);
+	global $connection;
+	$query="SELECT l.name, l.lawyer_id FROM cases_has_lawyers chs, lawyers l WHERE chs.lawyer_id=l.lawyer_id AND chs.case_id='$id'";
+	$result_set=mysqli_query($connection, $query);
 	confirm_query($result_set);
 	return $result_set;
 	}
 	// Client related functions
 	
 	 function count_all_clients(){
-	 $result = mysql_query("select * from clients");
+	 global $connection;
+	 $result = mysqli_query($connection, "SELECT * FROM clients");
 	 $answer=0;
-	 while($row =mysql_fetch_array($result )){
+	 while($row = mysqli_fetch_array($result)){
 	 $answer++;
 	 }
 	 return $answer;
 	 }
 	 function find_total_zero_status_clients(){
-	 $result = mysql_query("SELECT * FROM clients where status=0"); 
+	 global $connection;
+	 $result = mysqli_query($connection, "SELECT * FROM clients WHERE status=0"); 
 	 confirm_query($result);
 		$answer=0; 
-	while($row = mysql_fetch_array( $result )) {
+	while($row = mysqli_fetch_array($result)) {
 	$answer++;
 	}
 	return $answer;
 	}
 	
  	function find_all_zero_status_clients(){
-	$result_set = mysql_query("SELECT * FROM clients where status=0"); 
+	global $connection;
+	$result_set = mysqli_query($connection, "SELECT * FROM clients WHERE status=0"); 
 	confirm_query($result_set);
 		return $result_set;
 	}
 	
 	function delete_client_by_id($id){
-	$result_set=mysql_query("delete from clients WHERE  client_id ='$id'");
+	global $connection;
+	$result_set=mysqli_query($connection, "DELETE FROM clients WHERE client_id ='$id'");
 	confirm_query($result_set);
 	return true;
 	}
 	function allow_client($id){
-	$result_set=mysql_query("UPDATE  clients SET  status =  '1' WHERE  client_id ='$id'");
+	global $connection;
+	$result_set=mysqli_query($connection, "UPDATE clients SET status = '1' WHERE client_id ='$id'");
 	confirm_query($result_set);
 	return true;
 	}
 	function block_client($id){
-	$result_set=mysql_query("UPDATE  clients SET  status =  '0' WHERE  client_id ='$id'");
+	global $connection;
+	$result_set=mysqli_query($connection, "UPDATE clients SET status = '0' WHERE client_id ='$id'");
 	confirm_query($result_set);
 	return true;
 	}
 	function all_clients(){
-	$result_set=mysql_query("select * from clients");
+	global $connection;
+	$result_set=mysqli_query($connection, "SELECT * FROM clients");
 	confirm_query($result_set);
 	return $result_set;
 	}
 	function find_client_name_by_id($id){
-	$result_set=mysql_query("select name from clients where client_id='$id' limit 1");
+	global $connection;
+	$result_set=mysqli_query($connection, "SELECT name FROM clients WHERE client_id='$id' LIMIT 1");
 	confirm_query($result_set);
 	return $result_set;
 	}
 	// Courts related functions
 	
 	function find_total_courts(){
-	$result = mysql_query("SELECT * FROM courts") 
-		or die(mysql_error()); 
+	global $connection;
+	$result = mysqli_query($connection, "SELECT * FROM courts") 
+		or die(mysqli_error($connection)); 
 		$ans=0; 
-	while($row = mysql_fetch_array( $result )) {
+	while($row = mysqli_fetch_array($result)) {
 	$ans++;
 	}
 	return $ans++;
 	}
 	function find_all_courts(){
-	$result_set=mysql_query("SELECT * from courts");
+	global $connection;
+	$result_set=mysqli_query($connection, "SELECT * FROM courts");
 	confirm_query($result_set);
 	return $result_set;
 	}
 	function find_court_by_id($id){
-	$query="SELECT * FROM courts WHERE court_id='$id' limit 1";
- $result = mysql_query($query);
-  confirm_query($result);
-  return $result;
+	global $connection;
+	$query="SELECT * FROM courts WHERE court_id='$id' LIMIT 1";
+	$result = mysqli_query($connection, $query);
+	confirm_query($result);
+	return $result;
 	}
 	function edit_court_by_id($id,$name){
-	$query="UPDATE  courts SET  name =  '{$name}' WHERE  court_id ='$id'";
- $result = mysql_query($query);
-  confirm_query($result);
-  return true;
+	global $connection;
+	$query="UPDATE courts SET name = '{$name}' WHERE court_id ='$id'";
+	$result = mysqli_query($connection, $query);
+	confirm_query($result);
+	return true;
 	}
 	function add_new_court($name){
+	global $connection;
 	$query="INSERT courts SET name='$name'";
-	$result = mysql_query($query);
-	confirm_query($query);
+	$result = mysqli_query($connection, $query);
+	confirm_query($result);
 	return true;
 	}
 	function delete_court_by_id($id){
-	$result_set=mysql_query("delete from courts WHERE  court_id ='$id'");
+	global $connection;
+	$result_set=mysqli_query($connection, "DELETE FROM courts WHERE court_id ='$id'");
 	confirm_query($result_set);
 	return true;
 	}
@@ -155,47 +174,53 @@
 	
 	// cases RELATED functions
 	function find_total_cases(){
-	$result = mysql_query("SELECT * FROM cases") 
-		or die(mysql_error()); 
+	global $connection;
+	$result = mysqli_query($connection, "SELECT * FROM cases") 
+		or die(mysqli_error($connection)); 
 		$ans=0; 
-	while($row = mysql_fetch_array( $result )) {
+	while($row = mysqli_fetch_array($result)) {
 	$ans++;
 	}
 	return $ans;
 	}
 	function find_all_cases(){
-	$result_set=mysql_query("SELECT * from cases");
+	global $connection;
+	$result_set=mysqli_query($connection, "SELECT * FROM cases");
 	confirm_query($result_set);
 	return $result_set;
 	}
 	function find_case_by_id($id){
-	$query="SELECT * FROM cases WHERE case_id='$id' limit 1";
- $result = mysql_query($query);
-  confirm_query($result);
-  return $result;
+	global $connection;
+	$query="SELECT * FROM cases WHERE case_id='$id' LIMIT 1";
+	$result = mysqli_query($connection, $query);
+	confirm_query($result);
+	return $result;
 	}
 	//step 1: performing step one of add-case.php
 	function add_new_case($name,$description,$client){
+	global $connection;
 	$query="INSERT cases SET name='$name',description='$description',client_id='$client'";
-	$result = mysql_query($query);
-	confirm_query($query);
+	$result = mysqli_query($connection, $query);
+	confirm_query($result);
 	// Now Getting last inserted case id to make use in Step 3
-	$result=MYSQL_INSERT_ID(); // function to return last inserted id to 
+	$result=mysqli_insert_id($connection); // function to return last inserted id
 	return $result;
 	}
 	//step 2: performing step two of add-case.php
 	function add_lawyers_has_clients($lawyer,$client){
-	$query="insert lawyers_has_clients set lawyers_lawyer_id='$lawyer',clients_client_id='$client'";
-	$result=mysql_query($query);
-	confirm_query($query);
+	global $connection;
+	$query="INSERT lawyers_has_clients SET lawyers_lawyer_id='$lawyer', clients_client_id='$client'";
+	$result=mysqli_query($connection, $query);
+	confirm_query($result);
 	
 	return true;
 	}
 	//step 3: performing step three of add-case.php
 	function add_cases_has_lawyers($case,$lawyer){
-	$query="insert cases_has_lawyers set case_id='$case', lawyer_id='$lawyer'";
-	$result=mysql_query($query);
-	confirm_query($query);
+	global $connection;
+	$query="INSERT cases_has_lawyers SET case_id='$case', lawyer_id='$lawyer'";
+	$result=mysqli_query($connection, $query);
+	confirm_query($result);
 	return true;
 	}
     function redirect_to($new_location) {
@@ -225,10 +250,11 @@ function confirm_query($result_set){
 	}
 	// Admin related Functions
 	function count_all_admins(){
-	$result = mysql_query("SELECT * FROM admins") 
-		or die(mysql_error()); 
+	global $connection;
+	$result = mysqli_query($connection, "SELECT * FROM admins") 
+		or die(mysqli_error($connection)); 
 		$ans=0; 
-	while($row = mysql_fetch_array( $result )) {
+	while($row = mysqli_fetch_array($result)) {
 	$ans++;
 	}
 	return $ans;
@@ -289,11 +315,32 @@ function confirm_query($result_set){
 	
 	//news related functions
 	function count_all_news(){
-	$result = mysql_query("SELECT * FROM news") 
-		or die(mysql_error()); 
+	global $connection;
+	$result = mysqli_query($connection, "SELECT * FROM news") 
+		or die(mysqli_error($connection)); 
 		$ans=0; 
-	while($row = mysql_fetch_array( $result )) {
+	while($row = mysqli_fetch_array($result)) {
 	$ans++;
+	}
+	return $ans;
+	}
+	
+	// Notifications related functions
+	function count_all_notifications(){
+	global $connection;
+	// Check if table exists first
+	$table_check = mysqli_query($connection, "SHOW TABLES LIKE 'notifications'");
+	if(mysqli_num_rows($table_check) == 0) {
+		// Table doesn't exist, return 0
+		return 0;
+	}
+	
+	// If table exists, count records
+	$result = mysqli_query($connection, "SELECT * FROM notifications") 
+		or die(mysqli_error($connection)); 
+	$ans=0; 
+	while($row = mysqli_fetch_array($result)) {
+		$ans++;
 	}
 	return $ans;
 	}
@@ -301,8 +348,9 @@ function confirm_query($result_set){
 	// Team related functions
 	
 	function update_team_record($member_no,$lawyer_id,$description){
+	global $connection;
 	$query="UPDATE our_team set lawyers_lawyer_id='$lawyer_id',description='{$description}' where our_team_id='$member_no'";
-	$result=mysql_query($query);
+	$result=mysqli_query($connection, $query);
 	confirm_query($result);
 	return true;
 	}
