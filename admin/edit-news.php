@@ -1,4 +1,9 @@
-<?php include("news.php"); ?>
+<?php 
+// Start output buffering to prevent "headers already sent" warning
+ob_start();
+
+include("news.php"); 
+?>
 <div>
         <ul class="breadcrumb">
             <li>
@@ -65,8 +70,8 @@ echo '<div style="padding:4px; border:1px solid red; color:red;">'.$error.'</div
  {
  // get form data, making sure it is valid
  $id = $_POST['id'];
- $firstname = mysql_real_escape_string(htmlspecialchars($_POST['firstname']));
- $lastname = mysql_real_escape_string(htmlspecialchars($_POST['lastname']));
+ $firstname = mysqli_real_escape_string($connection, htmlspecialchars($_POST['firstname']));
+ $lastname = mysqli_real_escape_string($connection, htmlspecialchars($_POST['lastname']));
  
  // check that firstname/lastname fields are both filled in
  if ($firstname == '' || $lastname == '')
@@ -80,8 +85,8 @@ echo '<div style="padding:4px; border:1px solid red; color:red;">'.$error.'</div
  else
  {
  // save the data to the database
- mysql_query("UPDATE news SET news_heading='$firstname', news_detail='$lastname' WHERE news_id='$id'")
- or die(mysql_error()); 
+ mysqli_query($connection, "UPDATE news SET news_heading='$firstname', news_detail='$lastname' WHERE news_id='$id'")
+ or die(mysqli_error($connection)); 
  
  // once saved, redirect back to the view page
  header("Location: news.php?view=view"); 
@@ -102,9 +107,9 @@ echo '<div style="padding:4px; border:1px solid red; color:red;">'.$error.'</div
  {
  // query db
  $id = $_GET['id'];
- $result = mysql_query("SELECT * FROM news WHERE news_id=$id")
- or die(mysql_error()); 
- $row = mysql_fetch_array($result);
+ $result = mysqli_query($connection, "SELECT * FROM news WHERE news_id=$id")
+ or die(mysqli_error($connection)); 
+ $row = mysqli_fetch_array($result);
  
  // check that the 'id' matches up with a row in the databse
  if($row)
@@ -130,4 +135,7 @@ echo '<div style="padding:4px; border:1px solid red; color:red;">'.$error.'</div
  }
  }
 ?>
-<?php require('includes/php/footer.php'); ?>
+<?php 
+// End output buffering and send all output to browser
+ob_end_flush();
+?>

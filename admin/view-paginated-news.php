@@ -27,8 +27,8 @@
 	$per_page = 3;
 	
 	// figure out the total pages in the database
-	$result = mysql_query("SELECT * from news");
-	$total_results = mysql_num_rows($result);
+	$result = mysqli_query($connection, "SELECT * from news");
+	$total_results = mysqli_num_rows($result);
 	$total_pages = ceil($total_results / $per_page);
 
 	// check if the 'page' variable is set in the URL (ex: view-paginated.php?page=1)
@@ -64,31 +64,30 @@
 		echo "<a href='view-paginated-news.php?page=$i'>$i</a> ";
 	}
 	echo "</p>";
+	
+	// Get the data again with a limit
+	$result = mysqli_query($connection, "SELECT * FROM news LIMIT $start, $per_page");
 		
 	// display data in table
 	echo "<table border='1' cellpadding='10'>";
 	echo "<tr> <th>news_id</th> <th>news_heading</th> <th>news_detail</th> <th></th> <th></th></tr>";
 
 	// loop through results of database query, displaying them in the table	
-	for ($i = $start; $i < $end; $i++)
-	{
-		// make sure that PHP doesn't try to show results that don't exist
-		if ($i == $total_results) { break; }
-	
+	while ($row = mysqli_fetch_assoc($result)) {
 		// echo out the contents of each row into a table
 		echo "<tr>";
-		echo '<td>' . mysql_result($result, $i, 'news_id') . '</td>';
-		echo '<td>' . mysql_result($result, $i, 'news_heading') . '</td>';
-		echo '<td>' . mysql_result($result, $i, 'news_detail') . '</td>';
+		echo '<td>' . $row['news_id'] . '</td>';
+		echo '<td>' . $row['news_heading'] . '</td>';
+		echo '<td>' . $row['news_detail'] . '</td>';
 		
 		
-		echo '<td><a class="btn btn-info" href="edit-news.php?id=' . mysql_result($result, $i, 'news_id') . '">
+		echo '<td><a class="btn btn-info" href="edit-news.php?id=' . $row['news_id'] . '">
                 <i class="glyphicon glyphicon-edit icon-white"></i>
                 Edit
             </a></td>';
 		
 		
-		echo '<td><a class="btn btn-danger" href="delete-news.php?id=' . mysql_result($result, $i, 'news_id') . '">
+		echo '<td><a class="btn btn-danger" href="delete-news.php?id=' . $row['news_id'] . '">
                 <i class="glyphicon glyphicon-trash icon-white"></i>
                 Delete
             </a></td>';

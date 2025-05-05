@@ -48,7 +48,33 @@
 	}
 	function delete_lawyer_by_id($id){
 	global $connection;
-	$result_set=mysqli_query($connection, "DELETE FROM lawyers WHERE lawyer_id ='$id'");
+	
+	// Delete from appointments related to this lawyer
+	$result_set = mysqli_query($connection, "DELETE FROM appointments WHERE lawyer_id ='$id'");
+	confirm_query($result_set);
+	
+	// Delete from messages related to this lawyer
+	$result_set = mysqli_query($connection, "DELETE FROM messages WHERE lawyer_id ='$id'");
+	confirm_query($result_set);
+	
+	// Delete from lawyers_has_clients
+	$result_set = mysqli_query($connection, "DELETE FROM lawyers_has_clients WHERE lawyers_lawyer_id ='$id'");
+	confirm_query($result_set);
+	
+	// Delete from cases_has_lawyers
+	$result_set = mysqli_query($connection, "DELETE FROM cases_has_lawyers WHERE lawyer_id ='$id'");
+	confirm_query($result_set);
+	
+	// Delete from our_team if lawyer is part of team
+	$result_set = mysqli_query($connection, "DELETE FROM our_team WHERE lawyers_lawyer_id ='$id'");
+	confirm_query($result_set);
+	
+	// Delete from personal_schedule
+	$result_set = mysqli_query($connection, "DELETE FROM personal_schedule WHERE lawyer_id ='$id'");
+	confirm_query($result_set);
+	
+	// Finally delete the lawyer
+	$result_set = mysqli_query($connection, "DELETE FROM lawyers WHERE lawyer_id ='$id'");
 	confirm_query($result_set);
 	return true;
 	}
@@ -97,7 +123,40 @@
 	
 	function delete_client_by_id($id){
 	global $connection;
-	$result_set=mysqli_query($connection, "DELETE FROM clients WHERE client_id ='$id'");
+	// First delete related appointments
+	$result_set = mysqli_query($connection, "DELETE FROM appointments WHERE client_id ='$id'");
+	confirm_query($result_set);
+	
+	// Find and delete any related records in lawyers_has_clients
+	$result_set = mysqli_query($connection, "DELETE FROM lawyers_has_clients WHERE clients_client_id ='$id'");
+	confirm_query($result_set);
+	
+	// Delete related messages
+	$result_set = mysqli_query($connection, "DELETE FROM messages WHERE client_id ='$id'");
+	confirm_query($result_set);
+	
+	// Find cases associated with this client
+	$cases_result = mysqli_query($connection, "SELECT case_id FROM cases WHERE client_id ='$id'");
+	confirm_query($cases_result);
+	
+	// For each case, delete related records in cases_has_lawyers and courts_has_cases
+	while($case = mysqli_fetch_assoc($cases_result)) {
+		$case_id = $case['case_id'];
+		// Delete from cases_has_lawyers
+		$result_set = mysqli_query($connection, "DELETE FROM cases_has_lawyers WHERE case_id ='$case_id'");
+		confirm_query($result_set);
+		
+		// Delete from courts_has_cases
+		$result_set = mysqli_query($connection, "DELETE FROM courts_has_cases WHERE cases_case_id ='$case_id' AND cases_client_id ='$id'");
+		confirm_query($result_set);
+	}
+	
+	// Now delete the cases
+	$result_set = mysqli_query($connection, "DELETE FROM cases WHERE client_id ='$id'");
+	confirm_query($result_set);
+	
+	// Then delete the client
+	$result_set = mysqli_query($connection, "DELETE FROM clients WHERE client_id ='$id'");
 	confirm_query($result_set);
 	return true;
 	}

@@ -1,4 +1,9 @@
-<?php include("news.php") ?>
+<?php
+// Start output buffering to prevent "headers already sent" warning
+ob_start();
+
+include("news.php") 
+?>
 <div>
         <ul class="breadcrumb">
             <li>
@@ -63,8 +68,8 @@
  if (isset($_POST['submit']))
  { 
  // get form data, making sure it is valid
- $firstname = mysql_real_escape_string(htmlspecialchars($_POST['firstname']));
- $lastname = mysql_real_escape_string(htmlspecialchars($_POST['lastname']));
+ $firstname = mysqli_real_escape_string($connection, htmlspecialchars($_POST['firstname']));
+ $lastname = mysqli_real_escape_string($connection, htmlspecialchars($_POST['lastname']));
  
  // check to make sure both fields are entered
  if ($firstname == '' || $lastname == '')
@@ -78,8 +83,8 @@
  else
  {
  // save the data to the database
- mysql_query("INSERT news SET news_heading='$firstname', news_detail='$lastname'")
- or die(mysql_error()); 
+ mysqli_query($connection, "INSERT news SET news_heading='$firstname', news_detail='$lastname'")
+ or die(mysqli_error($connection)); 
  
  // once saved, redirect back to the view page
  header("Location: news.php?view=view"); 
@@ -90,4 +95,7 @@
  {
  renderForm('','','');
  }
+
+// End output buffering and send all output to browser
+ob_end_flush();
 ?>

@@ -25,8 +25,8 @@
     </div>
 	<?php
 	
-	$result = mysql_query("SELECT * FROM news") 
-		or die(mysql_error());
+	$result = mysqli_query($connection, "SELECT * FROM news") 
+		or die(mysqli_error($connection));
 		
 	// display data in table
 	echo "<p><b>View All</b> | <a href='view-paginated-news.php?page=1'>View Paginated</a></p>";
@@ -35,7 +35,7 @@
 	echo "<tr> <th>No.</th> <th>Posting DATE:Time</th><th>Headline</th> <th>Detail</th> <th></th> <th></th></tr>";
 
 	// loop through results of database query, displaying them in the table
-	while($row = mysql_fetch_array( $result )) {
+	while($row = mysqli_fetch_array($result)) {
 		
 		// echo out the contents of each row into a table
 		echo "<tr>";
