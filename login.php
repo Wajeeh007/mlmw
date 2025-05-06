@@ -1,3 +1,7 @@
+<?php
+// Start the session before any output
+session_start();
+?>
 <!doctype html>
 <html>
 <head>

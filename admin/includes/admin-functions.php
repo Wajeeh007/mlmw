@@ -283,9 +283,22 @@
 	return true;
 	}
     function redirect_to($new_location) {
-	header("Location: " . $new_location);
-	  exit;
-	}
+        // Check if headers have already been sent
+        if (!headers_sent()) {
+            // Use standard PHP header redirect if possible
+            header("Location: " . $new_location);
+            exit;
+        } else {
+            // Fallback to JavaScript redirect if headers already sent
+            echo '<script type="text/javascript">';
+            echo 'window.location.href="' . $new_location . '";';
+            echo '</script>';
+            echo '<noscript>';
+            echo '<meta http-equiv="refresh" content="0;url=' . $new_location . '" />';
+            echo '</noscript>';
+            exit;
+        }
+    }
 function confirm_query($result_set){
 		if(!$result_set){
 		die("database query faild");

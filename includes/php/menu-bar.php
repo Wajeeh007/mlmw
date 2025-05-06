@@ -1,13 +1,21 @@
+<?php 
+// Include functions
+require_once("includes/functions.php"); 
+
+// Check if session exists rather than starting one
+// This avoids errors if output has already been sent
+?>
+
 <!-- Professional Navigation Bar with Tailwind CSS -->
 <!-- Tailwind CSS CDN -->
 <!-- <script src="https://cdn.tailwindcss.com"></script> -->
 
-<nav class="fixed top-0 left-0 right-0 z-50 bg-indigo-900 shadow-md">
+<nav class="fixed top-0 left-0 right-0 z-50 shadow-md" style="background-color: #0D2240;">
     <div class="container mx-auto px-4">
         <div class="flex flex-wrap items-center justify-between py-3">
             <!-- Brand/Logo -->
             <a href="index.php" class="flex items-center text-white text-xl font-semibold">
-                <img src="/admin/" alt="Logo" class="w-8 h-8 mr-2">
+                <img src="img/justice.AVIF" alt="Logo" class="w-10 h-10 mr-2">
                 <span>MLMW</span>
             </a>
             
@@ -21,20 +29,20 @@
             <!-- Navigation Links -->
             <div id="navbar-menu" class="hidden md:flex md:items-center w-full md:w-auto">
                 <div class="md:flex">
-                    <a href="index.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-indigo-800 px-4 py-2 mr-1">Home</a>
-                    <a href="lawyers.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-indigo-800 px-4 py-2 mr-1">Lawyers</a>
-                    <a href="clients.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-indigo-800 px-4 py-2 mr-1">Clients</a>
-                    <a href="cases.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-indigo-800 px-4 py-2 mr-1">Cases</a>
-                    <a href="courts.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-indigo-800 px-4 py-2 mr-1">Courts</a>
-                    <a href="news.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-indigo-800 px-4 py-2 mr-1">News</a>
-                    <a href="mobileapp.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-indigo-800 px-4 py-2 mr-1">Mobile App</a>
-                    <a href="contactus.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-indigo-800 px-4 py-2 mr-1">Contact Us</a>
+                    <a href="index.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-blue-900 px-4 py-2 mr-1">Home</a>
+                    <a href="lawyers.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-blue-900 px-4 py-2 mr-1">Lawyers</a>
+                    <a href="clients.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-blue-900 px-4 py-2 mr-1">Clients</a>
+                    <a href="cases.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-blue-900 px-4 py-2 mr-1">Cases</a>
+                    <a href="courts.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-blue-900 px-4 py-2 mr-1">Courts</a>
+                    <a href="news.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-blue-900 px-4 py-2 mr-1">News</a>
+                    <a href="mobileapp.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-blue-900 px-4 py-2 mr-1">Mobile App</a>
+                    <a href="contactus.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-blue-900 px-4 py-2 mr-1">Contact Us</a>
                 </div>
                 
                 <div class="md:flex md:ml-4">
                     <!-- Register Dropdown -->
                     <div class="relative group">
-                        <button class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-indigo-800 px-4 py-2">
+                        <button class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-blue-900 px-4 py-2">
                             Register <span class="ml-1">▼</span>
                         </button>
                         <div class="absolute right-0 hidden group-hover:block bg-white shadow-lg w-48 z-10">
@@ -47,25 +55,23 @@
                         </div>
                     </div>
                     
-                    <?php require_once("includes/functions.php"); ?>
-
                     <!-- Dynamic Login/Account Controls based on session -->
-                    <?php if(isset($_SESSION['lawyer_id'])){ ?>
-                    <a href="mlmw_lawyer.php?lawyer=lawyer" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-indigo-800 px-4 py-2">
+                    <?php if(isset($_SESSION) && isset($_SESSION['lawyer_id'])){ ?>
+                    <a href="mlmw_lawyer.php?lawyer=lawyer" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-blue-900 px-4 py-2">
                         <i class="fas fa-user-circle"></i> My Account
                     </a>
-                    <a href="logout.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-indigo-800 px-4 py-2">
+                    <a href="logout.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-blue-900 px-4 py-2">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>
-                    <?php } else if (isset($_SESSION['client_id'])){ ?>
-                    <a href="mlmw_client.php?client=client" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-indigo-800 px-4 py-2">
+                    <?php } else if (isset($_SESSION) && isset($_SESSION['client_id'])){ ?>
+                    <a href="mlmw_client.php?client=client" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-blue-900 px-4 py-2">
                         <i class="fas fa-user-circle"></i> My Account
                     </a>
-                    <a href="client_logout.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-indigo-800 px-4 py-2">
+                    <a href="client_logout.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-blue-900 px-4 py-2">
                         <i class="fas fa-sign-out-alt"></i> Logout
                     </a>
                     <?php } else { ?>
-                    <a href="login.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-indigo-800 px-4 py-2">
+                    <a href="login.php" class="block mt-4 md:inline-block md:mt-0 text-gray-200 hover:text-white hover:bg-blue-900 px-4 py-2">
                         <i class="fas fa-sign-in-alt"></i> Login
                     </a>
                     <?php } ?>
