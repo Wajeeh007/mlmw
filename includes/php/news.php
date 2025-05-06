@@ -1,52 +1,101 @@
 <!--latest news start-->
-<div class="bg-primary">
-<h3 style="color:#ffffFF" align="center"><div class="glyphicon glyphicon-arrow-down"></div> <b>Latest News</b></h3>
+<div class="mb-8">
+    <h3 class="text-2xl md:text-3xl font-serif font-bold mb-4 text-center text-primary">Latest News</h3>
 </div>
-<hr />  
 
-<div class="row">
-<marquee direction="up" scrollamount="1">
+<?php
+// Direct database connection without requiring config.php
+$db_host = "localhost";
+$db_user = "root";
+$db_pass = "";
+$db_name = "mlmw";
 
-<?php require_once("./includes/db_connection.php") 	?>
-<?php require_once("./includes/functions.php") 	?>
+$con = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
 
- <?php 
- $news_set=find_news();
- ?>
- <?php
- // 3. Use returned data (if any)
- while ($news=mysqli_fetch_assoc($news_set)) {
- // out put data from each row
- ?>
- <div class="media">
- <div class="media-body">
- <?php
- $news_heading=$news['news_heading'];
-  $news_date=$news['news_date'];
- $news_detail=$news['news_detail'] ;
+// Check connection
+if (mysqli_connect_errno()) {
+    echo "Database connection failed: " . mysqli_connect_error();
+    exit();
+}
 
+// Query to get the latest news articles - explicitly using news_date column
+try {
+    $query = "SELECT * FROM news ORDER BY news_date DESC LIMIT 3";
+    $result = mysqli_query($con, $query);
+    
+    if (!$result) {
+        throw new Exception(mysqli_error($con));
+    }
+} catch (Exception $e) {
+    echo '<div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">';
+    echo '<p>Error retrieving news: ' . $e->getMessage() . '</p>';
+    echo '</div>';
+    $result = null;
+}
 ?>
 
- <h4 class="media-heading"><a href="news.php"><?php echo $news_heading ?></a></h4>
-    <?php echo $news_date ?><br />
-	<?php echo $news_detail ?>
-	
-  </div>
-  <a href="news.php"><button type="button" class="btn btn-success">View Detail <span class="glyphicon glyphicon-chevron-right"> </span></button></a><hr/> 	
+<div class="space-y-8">
+    <?php 
+    if($result && mysqli_num_rows($result) > 0) {
+        while($row = mysqli_fetch_assoc($result)) {
+    ?>
+    <div class="bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:-translate-y-2 hover:shadow-xl">
+        <div class="md:flex">
+            <div class="md:w-1/3">
+                <?php if(!empty($row['news_image'])): ?>
+                    <img src="<?php echo htmlspecialchars($row['news_image']); ?>" alt="<?php echo htmlspecialchars($row['news_heading']); ?>" class="w-full h-full object-cover object-center" style="min-height: 250px;">
+                <?php else: ?>
+                    <div class="w-full h-full bg-primary flex flex-col items-center justify-center text-white" style="min-height: 250px;">
+                        <div class="text-4xl mb-4"><i class="fas fa-newspaper"></i></div>
+                        <div class="text-xl font-serif font-bold">Legal News</div>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="md:w-2/3 p-6">
+                <div class="flex items-center text-sm text-gray-500 mb-3">
+                    <span class="flex items-center mr-4">
+                        <i class="far fa-calendar-alt mr-2"></i>
+                        <?php echo date('F d, Y', strtotime($row['news_date'])); ?>
+                    </span>
+                    <span class="flex items-center">
+                        <i class="far fa-user mr-2"></i>
+                        <?php echo htmlspecialchars($row['news_author']); ?>
+                    </span>
+                </div>
+                
+                <h3 class="text-xl font-serif font-bold mb-3 hover:text-primary transition duration-300">
+                    <a href="news_detail.php?id=<?php echo $row['news_id']; ?>"><?php echo htmlspecialchars($row['news_heading']); ?></a>
+                </h3>
+                
+                <p class="text-gray-600 mb-5">
+                    <?php 
+                    // Limit the excerpt to 150 characters
+                    echo substr(htmlspecialchars($row['news_detail']), 0, 150) . '...'; 
+                    ?>
+                </p>
+                
+                <a href="news_detail.php?id=<?php echo $row['news_id']; ?>" class="inline-flex items-center text-primary hover:text-primary-dark font-semibold transition duration-300">
+                    Read More <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <?php 
+        }
+    } else {
+    ?>
+    <div class="bg-white rounded-lg shadow-md p-8 text-center">
+        <h3 class="text-xl font-serif font-bold mb-3">No News Available</h3>
+        <p class="text-gray-600">Check back soon for the latest legal news and updates.</p>
+    </div>
+    <?php 
+    }
+    ?>
 </div>
-<?php 
- }
- 
- ?>
- 
- <?php 
- // 4. Release the returned data
- mysqli_free_result($news_set);
- ?>
- 
 
-  
-    
-</marquee>
+<div class="mt-10 text-center">
+    <a href="news.php" class="inline-block bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-8 rounded transition duration-300">
+        View All News
+    </a>
 </div>
 	<!--latest news end-->

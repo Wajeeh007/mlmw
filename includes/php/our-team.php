@@ -1,48 +1,65 @@
-
-<div class="container" id="cnt1">
-    <div class="row feature">
-<h2 align="center"><a href="#" class="btn btn-danger btn-lg">We're here to help</a></h2>
-       
-			
-			
-<?php $team_set=our_team(); 
-while ($team=mysqli_fetch_assoc($team_set)) {
-$id=$team['lawyers_lawyer_id'];
-$image_c=find_lawyer_image_by_lawyer_id($id);
-
-$img=mysqli_fetch_assoc($image_c);
-$image=$img['image'];
-
-
-$description=$team['description'];
-$result=find_lawyer_by_id($id);
-$result_lawyer=mysqli_fetch_assoc($result);
-$name=$result_lawyer['name'];
-
-
-?>
-
-				 <div class="col-md-4">
-            <div>
-			
-                
-				
-				<?php if($image != null){ ?>
-	<img src="img/<?php echo $image ?>" class="img-circle  img-rounded" height="280" width="253" style="margin-top:1em" class="img-responsive"/>
-	<?php } else { ?>
-	<img src="img/default-user.png" class="img-circle img-thumbnail img-rounded" height="280" width="253" style="margin-top:1em" />
-	<?php }?>
-				
-                <h2><?php echo $name; ?></h2>
-                <p><?php echo $description ?>                  
-                </p>
-                <a href="lawyers.php" class="btn btn-success lower" >See Full Profile</a>
-            </div>
-        </div>
 <?php
-}
+// Connect to the database
+require_once("includes/config.php");
+
+// Query to get the team members
+$query = "SELECT * FROM team ORDER BY id LIMIT 4";
+$result = mysqli_query($con, $query);
 ?>
-        
+
+<div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <?php 
+    if(mysqli_num_rows($result) > 0) {
+        while($row = mysqli_fetch_assoc($result)) {
+    ?>
+    <div class="bg-white rounded-lg shadow-md p-6 text-center transform transition duration-300 hover:-translate-y-2 hover:shadow-xl">
+        <div class="relative w-32 h-32 rounded-full overflow-hidden mx-auto mb-6">
+            <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>" class="w-full h-full object-cover">
+        </div>
+        <h4 class="text-xl font-serif font-bold mb-2"><?php echo htmlspecialchars($row['name']); ?></h4>
+        <p class="text-primary mb-4"><?php echo htmlspecialchars($row['position']); ?></p>
+        <p class="text-gray-600 mb-5"><?php echo htmlspecialchars($row['bio']); ?></p>
+        <div class="flex justify-center space-x-3">
+            <?php if(!empty($row['email'])): ?>
+            <a href="mailto:<?php echo htmlspecialchars($row['email']); ?>" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white transition duration-300">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <?php endif; ?>
+            
+            <?php if(!empty($row['phone'])): ?>
+            <a href="tel:<?php echo htmlspecialchars($row['phone']); ?>" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white transition duration-300">
+                <i class="fas fa-phone-alt"></i>
+            </a>
+            <?php endif; ?>
+            
+            <?php if(!empty($row['linkedin'])): ?>
+            <a href="<?php echo htmlspecialchars($row['linkedin']); ?>" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white transition duration-300">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <?php endif; ?>
+            
+            <?php if(!empty($row['twitter'])): ?>
+            <a href="<?php echo htmlspecialchars($row['twitter']); ?>" target="_blank" class="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-primary hover:text-white transition duration-300">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php 
+        }
+    } else {
+    ?>
+    <div class="col-span-full text-center">
+        <p class="text-gray-500">No team members found.</p>
+    </div>
+    <?php 
+    }
+    ?>
 </div>
+
+<div class="text-center mt-12">
+    <a href="lawyers.php" class="inline-block bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-8 rounded transition duration-300">
+        View All Attorneys
+    </a>
 </div>
 	

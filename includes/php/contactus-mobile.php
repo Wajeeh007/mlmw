@@ -1,215 +1,102 @@
-<div class="col-md-6">
-            <div class="well well-sm">
-                <form class="form-horizontal" method="post" action="index.php?email=email">
-                    <fieldset>
-                        <legend class="text-center mobile">Contact us</legend>
-                        <div class="form-group">
-                            <div class="col-md-10 col-md-offset-1">
-                                <input id="fname" name="first_name" type="text" placeholder="First Name" class="form-control" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-10 col-md-offset-1">
-                                <input id="lname" name="last_name" type="text" placeholder="Last Name" class="form-control" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-10 col-md-offset-1">
-                                <input id="email" name="email" type="text" placeholder="Email Address" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-10 col-md-offset-1">
-                                <input id="phone" name="phone" type="text" placeholder="Phone" class="form-control" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-10 col-md-offset-1">
-                                <textarea class="form-control" id="message" name="comments" placeholder="Enter your massage for us here. We will get back to you within 2 business days." rows="7"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-12 text-center">
-        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
-				
-				
+<!-- Contact Form Column -->
+<div class="w-full lg:w-1/2 mb-10 lg:mb-0 lg:pr-12">
+    <h3 class="text-2xl font-serif font-bold mb-6">Contact Information</h3>
+    <p class="text-gray-600 mb-8">We're here to help with any questions about our legal services. Reach out to us using the contact information below or fill out the form.</p>
+    
+    <div class="space-y-6">
+        <div class="flex items-start">
+            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary bg-opacity-10 flex items-center justify-center text-primary">
+                <i class="fas fa-map-marker-alt"></i>
             </div>
-			<?php
-			
- 
-if(isset($_POST['email'])) {
- 
-     
- 
-    // EDIT THE 2 LINES BELOW AS REQUIRED
- 
-    $email_to = "info@mlmw.com";
- 
-    $email_subject = "Hi Email!";
- 
-     
- 
-     
- 
-    function died($error) {
- 
-        // your error code can go here
- 
-        echo "We are very sorry, but there were error(s) found with the form you submitted. ";
- 
-   
- 
-        die();
- 
-    }
- 
-     
- 
-    // validation expected data exists
- 
-    if(!isset($_POST['first_name']) ||
- 
-        !isset($_POST['last_name']) ||
- 
-        !isset($_POST['email']) ||
- 
-        !isset($_POST['telephone']) ||
- 
-        !isset($_POST['comments'])) {
- 
-        died('We are sorry, but there appears to be a problem with the form you submitted.');       
- 
-    }
- 
-     
- 
-    $first_name = $_POST['first_name']; // required
- 
-    $last_name = $_POST['last_name']; // required
- 
-    $email_from = $_POST['email']; // required
- 
-    $telephone = $_POST['telephone']; // not required
- 
-    $comments = $_POST['comments']; // required
- 
-     
- 
-    $error_message = "";
- 
-    $email_exp = '/^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/';
- 
-  if(!preg_match($email_exp,$email_from)) {
- 
-    $error_message .= 'The Email Address you entered does not appear to be valid.<br />';
- 
-  }
- 
-    $string_exp = "/^[A-Za-z .'-]+$/";
- 
-  if(!preg_match($string_exp,$first_name)) {
- 
-    $error_message .= 'The First Name you entered does not appear to be valid.<br />';
- 
-  }
- 
-  if(!preg_match($string_exp,$last_name)) {
- 
-    $error_message .= 'The Last Name you entered does not appear to be valid.<br />';
- 
-  }
- 
-  if(strlen($comments) < 2) {
- 
-    $error_message .= 'The Comments you entered do not appear to be valid.<br />';
- 
-  }
- 
-  if(strlen($error_message) > 0) {
- 
-    died($error_message);
- 
-  }
- 
-    $email_message = "Form details below.\n\n";
- 
-     
- 
-    function clean_string($string) {
- 
-      $bad = array("content-type","bcc:","to:","cc:","href");
- 
-      return str_replace($bad,"",$string);
- 
-    }
- 
-     
- 
-    $email_message .= "First Name: ".clean_string($first_name)."\n";
- 
-    $email_message .= "Last Name: ".clean_string($last_name)."\n";
- 
-    $email_message .= "Email: ".clean_string($email_from)."\n";
- 
-    $email_message .= "Telephone: ".clean_string($telephone)."\n";
- 
-    $email_message .= "Comments: ".clean_string($comments)."\n";
- 
-     
- 
-     
- 
-// create email headers
- 
-$headers = 'From: '.$email_from."\r\n".
- 
-'Reply-To: '.$email_from."\r\n" .
- 
-'X-Mailer: PHP/' . phpversion();
- 
-@mail($email_to, $email_subject, $email_message, $headers);  
- 
-?>
- 
- 
- 
-<!-- include your own success html here -->
- 
- 
- 
-Thank you for contacting us. We will be in touch with you very soon.
- 
- 
- 
-<?php
- 
-}
- 
-?>
-
-			
+            <div class="ml-4">
+                <h5 class="text-lg font-semibold mb-1">Our Office</h5>
+                <p class="text-gray-600">1234 Legal Street, Suite 500<br>New York, NY 10001</p>
+            </div>
         </div>
-        <div class="col-md-4 col-md-offset-1">
-            <div>
-                <div class="panel panel-default">
-                    <div class="text-center mobile">Mobile App</div>
-                    <div class="panel-body text-center">
-                        <img src="img/jjj.jpg" class="img-responsive" align="middle"/>
-						<h4>My Lawyer My Way Application</h4>
-                        
-                        <hr />
-                        <a href="mobileapp.php" class="btn btn-danger lower">Download</a>
-                        </div>
-                    </div>
+        
+        <div class="flex items-start">
+            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary bg-opacity-10 flex items-center justify-center text-primary">
+                <i class="fas fa-phone-alt"></i>
+            </div>
+            <div class="ml-4">
+                <h5 class="text-lg font-semibold mb-1">Phone</h5>
+                <p class="text-gray-600">+1 (555) 123-4567</p>
+                <p class="text-gray-600">+1 (555) 987-6543</p>
+            </div>
+        </div>
+        
+        <div class="flex items-start">
+            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary bg-opacity-10 flex items-center justify-center text-primary">
+                <i class="fas fa-envelope"></i>
+            </div>
+            <div class="ml-4">
+                <h5 class="text-lg font-semibold mb-1">Email</h5>
+                <p class="text-gray-600">info@mylawyermyway.com</p>
+                <p class="text-gray-600">support@mylawyermyway.com</p>
+            </div>
+        </div>
+        
+        <div class="flex items-start">
+            <div class="flex-shrink-0 w-12 h-12 rounded-full bg-primary bg-opacity-10 flex items-center justify-center text-primary">
+                <i class="fas fa-clock"></i>
+            </div>
+            <div class="ml-4">
+                <h5 class="text-lg font-semibold mb-1">Working Hours</h5>
+                <p class="text-gray-600">Monday - Friday: 9:00 AM - 5:00 PM</p>
+                <p class="text-gray-600">Saturday & Sunday: Closed</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-8">
+        <h5 class="text-lg font-semibold mb-4">Follow Us</h5>
+        <div class="flex space-x-4">
+            <a href="#" class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary-dark transition duration-300">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary-dark transition duration-300">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary-dark transition duration-300">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-primary-dark transition duration-300">
+                <i class="fab fa-instagram"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="w-full lg:w-1/2">
+    <div class="bg-white rounded-lg shadow-md p-8">
+        <h3 class="text-2xl font-serif font-bold mb-6">Send a Message</h3>
+        <form action="#" method="post">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <label for="name" class="block text-gray-700 font-medium mb-2">Full Name</label>
+                    <input type="text" id="name" name="name" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
+                    <input type="email" id="email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div>
+                    <label for="phone" class="block text-gray-700 font-medium mb-2">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                <div>
+                    <label for="subject" class="block text-gray-700 font-medium mb-2">Subject</label>
+                    <input type="text" id="subject" name="subject" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
                 </div>
             </div>
-        </div>
+            <div class="mb-6">
+                <label for="message" class="block text-gray-700 font-medium mb-2">Your Message</label>
+                <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required></textarea>
+            </div>
+            <button type="submit" class="w-full bg-primary hover:bg-primary-dark text-white font-semibold py-3 px-6 rounded-lg transition duration-300">
+                Send Message
+            </button>
+        </form>
+    </div>
+</div>
 		

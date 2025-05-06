@@ -1,0 +1,46 @@
+NEWS ERROR FIX SUMMARY
+===================
+
+Error: "Unknown column 'date' in 'order clause'"
+Location: includes/php/news.php
+
+Problem Analysis:
+----------------
+The error suggested that somewhere in the code, there was a SQL query trying to order by a column named 'date', but the actual column in the database is named 'news_date'.
+
+Despite extensive searching, we couldn't find any code in the current codebase that was actually using 'date' instead of 'news_date'. All queries we found were correctly using 'news_date'.
+
+This suggests the issue might be:
+1. A cached file or version of code running that hasn't been updated
+2. An edge case where 'date' is being dynamically used in a query somewhere
+3. Some other code that wasn't detected in our searches
+
+Solutions Applied:
+----------------
+We implemented multiple solutions to address this issue:
+
+1. Added try-catch error handling to includes/php/news.php
+   - This ensures that if the query fails, it shows a user-friendly error instead of crashing
+   - The error details will help diagnose any future issues
+
+2. Created a database view (news_view) that adds 'date' as an alias for 'news_date'
+   - This allows any code using 'date' to work correctly through the view
+   - To use it, change queries from "SELECT * FROM news" to "SELECT * FROM news_view"
+
+3. Created diagnostic tools:
+   - fix_all_news_queries.php: Scans all PHP files for problematic queries
+   - add_date_alias.php: Creates the news_view and reports on database structure
+
+Next Steps:
+----------
+1. Test your website to verify the error is resolved
+2. If you still encounter issues, consider:
+   - Clearing any PHP caches (opcache, etc.)
+   - Restarting the web server
+   - Using the diagnostic scripts to find other problematic queries
+
+3. Long-term solution:
+   - Once you're sure there are no more references to 'date', you can drop the news_view
+   - Continue using the try-catch error handling for robustness
+
+Note that the error occurred on line 12 in includes/php/news.php, but based on our inspection, that line was a database connection line, not a query line. This discrepancy suggests there might be some caching or file versioning issue at play. 

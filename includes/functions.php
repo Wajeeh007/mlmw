@@ -1,6 +1,4 @@
-
-
- <?php 
+<?php 
  	
 		// lawyers related functions
 		function find_lawyer_image_by_lawyer_id($id){
@@ -237,10 +235,10 @@
 		// News related functions
 		function find_news(){
 		global $connection;
-		 $query= "SELECT * FROM news";
-		 $news_set = mysqli_query($connection,$query);
-	     confirm_query($news_set);
-		 return $news_set;
+		$query = "SELECT * FROM news ORDER BY news_date DESC";
+		$news_set = mysqli_query($connection, $query);
+		confirm_query($news_set);
+		return $news_set;
 		}
 		//my Team related functioins
 		function our_team(){
